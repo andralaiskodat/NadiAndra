@@ -33,14 +33,14 @@ export function Navbar() {
 
   return (
     <nav className="fixed w-full z-50 top-0 left-0 px-4 py-3">
-      <div className="max-w-4xl mx-auto glass-panel rounded-full px-6 py-3 flex justify-between items-center transition-all duration-300">
+      <div className="max-w-5xl mx-auto glass-panel rounded-full px-6 py-3 flex justify-between items-center transition-all duration-300">
         <Link href="/" className="flex items-center space-x-2">
           <Heart className="w-6 h-6 text-(--color-accent-hover) fill-current animate-pulse" />
           <span className="font-bold text-xl tracking-tight hidden sm:block">Nadiandra</span>
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-5 lg:space-x-7">
+        <div className="hidden md:flex items-center space-x-3 lg:space-x-5">
           {navLinks.slice(1).map((link) => {
             const isActive = pathname === link.href;
             const Icon = link.icon;
@@ -48,12 +48,12 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative flex items-center space-x-1.5 text-sm font-black transition-all duration-300 hover:text-(--color-accent-hover) hover:scale-105 ${
+                className={`relative flex items-center space-x-1 text-sm font-black transition-all duration-300 hover:text-(--color-accent-hover) hover:scale-105 ${
                   isActive ? "text-(--color-accent-hover)" : "text-(--color-text-secondary)/80"
                 }`}
               >
                 <Icon className="w-4 h-4" />
-                <span>{link.name}</span>
+                <span className="whitespace-nowrap">{link.name}</span>
                 {isActive && (
                   <motion.div 
                     layoutId="activeDot"
