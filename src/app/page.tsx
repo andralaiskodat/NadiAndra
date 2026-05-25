@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { RelationshipCounter } from "@/components/RelationshipCounter";
-import { Camera, CalendarHeart, Clock, Image as ImageIcon, Heart } from "lucide-react";
+import { Camera, CalendarHeart, Clock, Image as ImageIcon, Heart, ListTodo } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
@@ -41,6 +41,13 @@ const features = [
     href: "/archive", 
     icon: ImageIcon,
     color: "from-emerald-400 to-teal-400"
+  },
+  { 
+    name: "Daftar Keinginan", 
+    description: "Wujudkan mimpi dan petualangan seru bersama", 
+    href: "/bucket-list", 
+    icon: ListTodo,
+    color: "from-cyan-400 to-blue-400"
   },
 ];
 
@@ -142,7 +149,7 @@ export default function Home() {
       <RelationshipCounter />
 
       {/* Grid Menu Features */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
         {features.map((feature, idx) => {
           const Icon = feature.icon;
           return (

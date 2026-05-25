@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
-import { Camera, CalendarHeart, Clock, Image as ImageIcon, Menu, Palette, X, Heart, LogOut, UserCircle } from "lucide-react";
+import { Camera, CalendarHeart, Clock, Image as ImageIcon, Menu, Palette, X, Heart, LogOut, UserCircle, ListTodo } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
@@ -28,6 +28,7 @@ export function Navbar() {
     { name: "Perencana Kencan", href: "/date-planner", icon: CalendarHeart },
     { name: "Kapsul Waktu", href: "/time-capsule", icon: Clock },
     { name: "Arsip Foto", href: "/archive", icon: ImageIcon },
+    { name: "Bucket List", href: "/bucket-list", icon: ListTodo },
   ];
 
   return (
