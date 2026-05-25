@@ -227,7 +227,7 @@ export default function PhotoArchive() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 backdrop-blur-md z-50"
+              className="fixed inset-0 bg-black/30 backdrop-blur-md z-[100]"
               onClick={closeModal}
             />
 
@@ -237,7 +237,7 @@ export default function PhotoArchive() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", bounce: 0.2 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-full max-w-lg glass-panel rounded-[2.5rem] p-8 relative overflow-hidden max-h-[90vh] overflow-y-auto">
