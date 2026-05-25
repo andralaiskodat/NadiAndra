@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, CalendarHeart, RefreshCw } from "lucide-react";
+import { Sparkles, CalendarHeart, RefreshCw, CheckCircle, HeartHandshake } from "lucide-react";
 
 const DATE_IDEAS = [
-  "Maraton film dengan camilan favorit",
-  "Jalan-jalan malam tanpa tujuan",
-  "Masak resep baru bersama",
-  "Piknik di taman kota",
-  "Kunjungi galeri seni atau museum",
-  "Malam main game arcade",
-  "Melihat bintang di atap",
-  "DIY tembikar atau melukis di rumah",
-  "Keliling kedai kopi",
-  "Bikin tenda selimut",
+  "Maraton film dengan camilan favorit 🍿",
+  "Jalan-jalan malam tanpa tujuan 🚗",
+  "Masak resep baru bersama 🍳",
+  "Piknik di taman kota 🧺",
+  "Kunjungi galeri seni atau museum 🎨",
+  "Malam main game arcade 👾",
+  "Melihat bintang di atap 🌟",
+  "DIY tembikar atau melukis di rumah 🏺",
+  "Keliling kedai kopi ☕",
+  "Bikin tenda selimut di ruang tamu ⛺",
 ];
 
 export default function DatePlanner() {
@@ -46,32 +46,36 @@ export default function DatePlanner() {
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-700 max-w-2xl mx-auto text-center">
-      <div className="space-y-4">
-        <h1 className="text-3xl md:text-5xl font-black text-(--color-text-primary) tracking-tight">
+    <div className="space-y-12 animate-in fade-in duration-700 max-w-2xl mx-auto pb-10">
+      {/* Header Section */}
+      <div className="text-center space-y-3">
+        <h1 className="text-4xl md:text-5xl font-black text-gradient tracking-tight">
           Perencana Kencan
         </h1>
-        <p className="text-lg text-(--color-text-secondary)">
-          Tidak tahu mau ngapain? Biar takdir yang memutuskan.
+        <p className="text-base md:text-lg text-(--color-text-secondary) font-bold">
+          Bingung mau jalan-jalan atau kencan ke mana? Biar takdir manis yang memilihkan!
         </p>
       </div>
 
-      <div className="glass-panel p-8 md:p-12 rounded-[3rem] relative overflow-hidden transform transition-transform hover:scale-[1.02]">
-        <div className="absolute top-0 right-0 -mr-10 -mt-10 text-(--color-accent) opacity-20 animate-wobble">
-          <CalendarHeart className="w-40 h-40" />
+      {/* Selector Container */}
+      <div className="glass-panel p-8 md:p-12 rounded-[3.5rem] relative overflow-hidden text-center">
+        {/* Floating Heart Icon */}
+        <div className="absolute top-0 right-0 -mr-12 -mt-12 text-(--color-accent) opacity-10 animate-float-slow pointer-events-none">
+          <CalendarHeart className="w-48 h-48" />
         </div>
         
         <div className="relative z-10 space-y-8 flex flex-col items-center">
-          <div className="h-40 flex items-center justify-center p-6 bg-white/40 dark:bg-black/20 rounded-3xl w-full border-2 border-dashed border-(--color-accent)">
+          {/* Output Display Board */}
+          <div className="h-44 flex items-center justify-center p-6 bg-white/40 dark:bg-black/15 rounded-[2rem] w-full border-2 border-dashed border-(--color-accent)/60 shadow-inner">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentDisplay}
-                initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.5, rotate: 10 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className={`text-2xl md:text-3xl font-black ${
-                  selectedDate ? "text-(--color-accent-hover) animate-bounce" : "text-(--color-text-secondary)"
+                initial={{ opacity: 0, y: 15, rotate: -2 }}
+                animate={{ opacity: 1, y: 0, rotate: 0 }}
+                exit={{ opacity: 0, y: -15, rotate: 2 }}
+                transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                className={`text-xl md:text-3xl font-black px-4 leading-relaxed ${
+                  selectedDate ? "text-gradient animate-pulse font-extrabold scale-105" : "text-(--color-text-secondary)"
                 }`}
               >
                 {currentDisplay}
@@ -79,36 +83,51 @@ export default function DatePlanner() {
             </AnimatePresence>
           </div>
 
+          {/* Action Trigger Button */}
           <button
             onClick={pickRandomDate}
             disabled={isSpinning}
-            className={`
-              relative group flex items-center space-x-3 px-8 py-4 rounded-full font-black text-xl
-              transition-all duration-300 transform
-              ${isSpinning ? "opacity-50 scale-95" : "hover:scale-110 hover:-translate-y-2 hover:shadow-[0_8px_0_0_var(--color-accent-hover)] shadow-[0_4px_0_0_var(--color-accent-hover)] active:translate-y-2 active:shadow-none"}
-              bg-(--color-accent) text-(--color-text-primary) border-2 border-(--color-accent-hover)
-            `}
+            className="premium-btn group flex items-center space-x-3 px-10 py-4.5 rounded-full font-black text-lg md:text-xl disabled:opacity-50"
           >
             {isSpinning ? (
-              <RefreshCw className="w-6 h-6 animate-spin" />
+              <RefreshCw className="w-6 h-6 animate-spin text-(--color-text-primary)" />
             ) : (
-              <Sparkles className="w-6 h-6 group-hover:animate-wobble" />
+              <Sparkles className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform text-(--color-text-primary)" />
             )}
-            <span>{isSpinning ? "Memilih..." : "Pilih Kencan!"}</span>
+            <span className="text-(--color-text-primary)">
+              {isSpinning ? "Memilih Takdir..." : "Pilih Acak Kencan!"}
+            </span>
           </button>
         </div>
       </div>
 
-      <div className="text-left glass-panel p-6 rounded-3xl mt-12">
-        <h3 className="text-xl font-bold text-(--color-text-primary) mb-4">Daftar Ide Kencan Kita</h3>
-        <ul className="space-y-2">
+      {/* Idea List Panel */}
+      <div className="glass-panel p-8 rounded-[2.5rem]">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className="p-3 bg-(--color-bg-secondary) rounded-2xl border border-(--color-accent)/30">
+            <HeartHandshake className="w-6 h-6 text-(--color-accent-hover)" />
+          </div>
+          <h3 className="text-xl md:text-2xl font-black text-(--color-text-primary)">
+            Daftar Ide Kencan Kita
+          </h3>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {DATE_IDEAS.map((idea, i) => (
-            <li key={i} className="flex items-center space-x-3 text-(--color-text-secondary)">
-              <div className="w-2 h-2 rounded-full bg-(--color-accent)" />
-              <span>{idea}</span>
-            </li>
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="flex items-center space-x-3 bg-white/30 dark:bg-black/10 rounded-2xl p-4 border border-white/20 hover:bg-white/50 transition-colors"
+            >
+              <CheckCircle className="w-5 h-5 text-(--color-accent-hover) flex-shrink-0" />
+              <span className="font-bold text-sm md:text-base text-(--color-text-secondary)">
+                {idea}
+              </span>
+            </motion.div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

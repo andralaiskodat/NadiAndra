@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Unlock, Send, Clock, KeyRound } from "lucide-react";
+import { Lock, Unlock, Send, Clock, KeyRound, CalendarDays, Inbox } from "lucide-react";
 import { format, isPast, addDays } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -10,13 +10,13 @@ const MOCK_CAPSULES = [
   {
     id: 1,
     title: "Untuk kita, 1 tahun lagi",
-    message: "Semoga kita masih baik-baik saja dan mengenang ini dengan tertawa!",
+    message: "Semoga kita masih baik-baik saja dan mengenang ini dengan tertawa! Sehat selalu dan lancar terus rezekinya ya sayang.",
     unlockDate: new Date(Date.now() - 100000000), // Tanggal lampau
   },
   {
     id: 2,
-    title: "Harapan Anniversari Kita",
-    message: "Ini adalah pesan rahasia yang hanya bisa kamu baca saat anniversari kita.",
+    title: "Harapan Anniversary Kita",
+    message: "Ini adalah pesan rahasia yang hanya bisa kamu baca saat anniversary kita. Aku ingin berterima kasih karena kamu selalu sabar mendampingiku.",
     unlockDate: addDays(new Date(), 30), // Tanggal mendatang
   }
 ];
@@ -54,74 +54,89 @@ export default function TimeCapsule() {
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-700 max-w-2xl mx-auto">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl md:text-5xl font-black text-(--color-text-primary) tracking-tight">
+    <div className="space-y-12 animate-in fade-in duration-700 max-w-2xl mx-auto pb-10">
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <h1 className="text-4xl md:text-5xl font-black text-gradient tracking-tight">
           Kapsul Waktu
         </h1>
-        <p className="text-lg text-(--color-text-secondary)">
-          Tulis pesan untuk diri kita di masa depan. Akan terkunci sampai tanggal yang dipilih.
+        <p className="text-base md:text-lg text-(--color-text-secondary) font-bold">
+          Kirim pesan rahasia untuk diri kita di masa depan. Pesan akan terkunci rapat hingga tanggal yang kamu pilih tiba.
         </p>
       </div>
 
+      {/* Action Trigger / Form */}
       {!isCreating ? (
         <button
           onClick={() => setIsCreating(true)}
-          className="w-full glass-panel border-dashed border-2 border-(--color-accent) p-6 rounded-3xl text-(--color-accent-hover) font-bold text-lg hover:bg-white/50 transition-colors flex justify-center items-center space-x-2"
+          className="w-full glass-panel border-dashed border-2 border-(--color-accent) p-6 rounded-[2rem] text-(--color-accent-hover) font-black text-lg hover:bg-white/40 transition-colors flex justify-center items-center space-x-2"
         >
-          <KeyRound className="w-6 h-6" />
-          <span>Kubur Kapsul Baru</span>
+          <KeyRound className="w-6 h-6 animate-wobble" />
+          <span>Kirim & Kubur Kapsul Baru</span>
         </button>
       ) : (
         <motion.form
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          className="glass-panel p-6 rounded-3xl space-y-4"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="glass-panel p-6 md:p-8 rounded-[2.5rem] space-y-5"
           onSubmit={handleCreate}
         >
+          <div className="flex justify-between items-center border-b border-(--color-glass-border) pb-3 mb-2">
+            <h3 className="text-xl font-black text-(--color-text-primary)">Kapsul Baru</h3>
+            <button 
+              type="button" 
+              onClick={() => setIsCreating(false)}
+              className="text-xs font-bold text-red-500 hover:underline"
+            >
+              Tutup
+            </button>
+          </div>
+
           <div>
-            <label className="block text-sm font-bold text-(--color-text-secondary) mb-1">Judul</label>
+            <label className="block text-sm font-black text-(--color-text-secondary) mb-1.5 ml-1">Judul Kapsul</label>
             <input
               type="text"
               required
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              className="w-full bg-white/50 dark:bg-black/20 border border-(--color-glass-border) rounded-xl px-4 py-3 text-(--color-text-primary) focus:outline-none focus:ring-2 focus:ring-(--color-accent)"
-              placeholder="mis. Target Tahun Depan"
+              className="w-full bg-white/40 dark:bg-black/10 border border-white/50 dark:border-white/10 rounded-2xl px-4 py-3.5 text-(--color-text-primary) font-bold focus:outline-none focus:ring-2 focus:ring-(--color-accent) transition-all shadow-sm"
+              placeholder="mis. Harapan Ulang Tahun Kamu"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-(--color-text-secondary) mb-1">Pesan Rahasia</label>
+            <label className="block text-sm font-black text-(--color-text-secondary) mb-1.5 ml-1">Isi Pesan Rahasia</label>
             <textarea
               required
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              className="w-full h-32 bg-white/50 dark:bg-black/20 border border-(--color-glass-border) rounded-xl px-4 py-3 text-(--color-text-primary) focus:outline-none focus:ring-2 focus:ring-(--color-accent) resize-none"
-              placeholder="Tulis pesan rahasiamu di sini..."
+              className="w-full h-36 bg-white/40 dark:bg-black/10 border border-white/50 dark:border-white/10 rounded-2xl px-4 py-3.5 text-(--color-text-primary) font-bold focus:outline-none focus:ring-2 focus:ring-(--color-accent) transition-all shadow-sm resize-none"
+              placeholder="Tulis apa yang ingin kamu sampaikan di masa depan..."
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-(--color-text-secondary) mb-1">Tanggal Buka</label>
-            <input
-              type="date"
-              required
-              value={unlockDate}
-              onChange={(e) => setUnlockDate(e.target.value)}
-              className="w-full bg-white/50 dark:bg-black/20 border border-(--color-glass-border) rounded-xl px-4 py-3 text-(--color-text-primary) focus:outline-none focus:ring-2 focus:ring-(--color-accent)"
-            />
+            <label className="block text-sm font-black text-(--color-text-secondary) mb-1.5 ml-1">Kunci Sampai Tanggal</label>
+            <div className="relative">
+              <input
+                type="date"
+                required
+                value={unlockDate}
+                onChange={(e) => setUnlockDate(e.target.value)}
+                className="w-full bg-white/40 dark:bg-black/10 border border-white/50 dark:border-white/10 rounded-2xl px-4 py-3.5 text-(--color-text-primary) font-bold focus:outline-none focus:ring-2 focus:ring-(--color-accent) transition-all shadow-sm"
+              />
+            </div>
           </div>
           <div className="flex space-x-3 pt-4">
             <button
               type="submit"
-              className="flex-1 bg-(--color-accent) hover:bg-(--color-accent-hover) text-(--color-text-primary) font-bold py-3 rounded-xl transition-colors flex items-center justify-center space-x-2"
+              className="flex-1 premium-btn font-black py-4.5 rounded-2xl transition-all flex items-center justify-center space-x-2"
             >
               <Send className="w-5 h-5" />
-              <span>Kunci Kapsulnya</span>
+              <span>Gembok Kapsul Waktu!</span>
             </button>
             <button
               type="button"
               onClick={() => setIsCreating(false)}
-              className="px-6 py-3 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-xl hover:opacity-80 transition-opacity"
+              className="px-6 py-4 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-2xl hover:opacity-80 transition-opacity"
             >
               Batal
             </button>
@@ -129,8 +144,15 @@ export default function TimeCapsule() {
         </motion.form>
       )}
 
-      <div className="space-y-4 mt-12">
-        <h3 className="text-2xl font-bold text-(--color-text-primary) mb-6">Kapsul Tersimpan</h3>
+      {/* Capsules Stack */}
+      <div className="space-y-5 mt-10">
+        <div className="flex items-center space-x-3 border-b border-(--color-glass-border) pb-3 mb-6">
+          <div className="p-2 bg-(--color-bg-secondary) rounded-xl">
+            <Inbox className="w-5 h-5 text-(--color-accent-hover)" />
+          </div>
+          <h3 className="text-xl md:text-2xl font-black text-(--color-text-primary)">Kapsul Tersimpan</h3>
+        </div>
+
         {capsules.map((capsule) => {
           const unlocked = isPast(capsule.unlockDate);
           const isOpened = openedCapsuleId === capsule.id;
@@ -140,38 +162,49 @@ export default function TimeCapsule() {
               key={capsule.id}
               layout
               className={`glass-panel rounded-3xl overflow-hidden transition-all duration-300 ${
-                unlocked ? "cursor-pointer hover:bg-white/40 border-(--color-accent)" : "opacity-80"
+                unlocked 
+                  ? "cursor-pointer hover:bg-white/50 shadow-md" 
+                  : "opacity-85 shadow-sm"
               }`}
               onClick={() => handleOpenCapsule(capsule)}
             >
               <div className="p-6 flex items-center justify-between">
-                <div>
-                  <h4 className="text-xl font-bold text-(--color-text-primary)">
+                <div className="space-y-1">
+                  <h4 className="text-lg md:text-xl font-black text-(--color-text-primary)">
                     {capsule.title}
                   </h4>
-                  <div className="flex items-center space-x-2 text-sm text-(--color-text-secondary) mt-2 font-bold">
-                    <Clock className="w-4 h-4" />
-                    <span>Dibuka pada {format(capsule.unlockDate, "PPP")}</span>
+                  <div className="flex items-center space-x-2 text-xs md:text-sm text-(--color-text-secondary) font-bold">
+                    <CalendarDays className="w-4 h-4 text-(--color-accent-hover)" />
+                    <span>Akan terbuka pada {format(capsule.unlockDate, "dd MMMM yyyy")}</span>
                   </div>
                 </div>
-                <div className={`p-4 rounded-2xl border-2 transition-transform duration-300 ${unlocked ? "bg-(--color-accent) border-(--color-accent-hover) group-hover:rotate-12" : "bg-gray-200 dark:bg-gray-800 border-gray-300 dark:border-gray-700 hover:animate-wobble"}`}>
+                
+                {/* Lock state badge */}
+                <div 
+                  className={`p-3.5 rounded-2xl border transition-all duration-300 ${
+                    unlocked 
+                      ? "bg-emerald-100 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800 text-emerald-600 animate-pulse" 
+                      : "bg-amber-100 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800 text-amber-600"
+                  }`}
+                >
                   {unlocked ? (
-                    <Unlock className="w-6 h-6 text-(--color-text-primary)" />
+                    <Unlock className="w-5 h-5" />
                   ) : (
-                    <Lock className="w-6 h-6 text-gray-500" />
+                    <Lock className="w-5 h-5" />
                   )}
                 </div>
               </div>
 
+              {/* Reveal logic */}
               <AnimatePresence>
                 {isOpened && unlocked && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="px-6 pb-6 border-t border-(--color-glass-border) mt-4 pt-4"
+                    className="px-6 pb-6 border-t border-(--color-glass-border) pt-5 bg-white/20 dark:bg-black/5"
                   >
-                    <p className="text-(--color-text-primary) whitespace-pre-wrap leading-relaxed font-serif text-lg italic">
+                    <p className="text-(--color-text-primary) whitespace-pre-wrap leading-relaxed font-black text-base md:text-lg italic p-4 bg-white/50 dark:bg-black/10 rounded-2xl border border-white/40 shadow-inner">
                       "{capsule.message}"
                     </p>
                   </motion.div>

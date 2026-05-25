@@ -39,7 +39,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+        <div className="hidden md:flex items-center space-x-5 lg:space-x-7">
           {navLinks.slice(1).map((link) => {
             const isActive = pathname === link.href;
             const Icon = link.icon;
@@ -47,39 +47,46 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-(--color-accent-hover) ${
-                  isActive ? "text-(--color-accent-hover)" : "text-(--color-text-secondary)"
+                className={`relative flex items-center space-x-1.5 text-sm font-black transition-all duration-300 hover:text-(--color-accent-hover) hover:scale-105 ${
+                  isActive ? "text-(--color-accent-hover)" : "text-(--color-text-secondary)/80"
                 }`}
               >
                 <Icon className="w-4 h-4" />
-                <span className="hidden lg:block">{link.name}</span>
+                <span>{link.name}</span>
+                {isActive && (
+                  <motion.div 
+                    layoutId="activeDot"
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-(--color-accent-hover)"
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  />
+                )}
               </Link>
             );
           })}
           
-          <div className="flex items-center space-x-2 border-l pl-4 border-(--color-glass-border)">
+          <div className="flex items-center space-x-2 border-l pl-4 border-black/5 dark:border-white/10">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-black/5 transition-colors"
+              className="p-2 rounded-full hover:bg-white/60 dark:hover:bg-black/20 text-(--color-text-primary) transition-all duration-300 hover:scale-110 cursor-pointer"
               title="Ganti Tema"
             >
-              <Palette className="w-5 h-5 text-(--color-text-primary)" />
+              <Palette className="w-4.5 h-4.5" />
             </button>
             <Link
               href="/profile"
-              className={`p-2 rounded-full hover:bg-black/5 transition-colors ${
-                pathname === "/profile" ? "text-(--color-accent-hover)" : "text-(--color-text-primary)"
+              className={`p-2 rounded-full hover:bg-white/60 dark:hover:bg-black/20 text-(--color-text-primary) transition-all duration-300 hover:scale-110 cursor-pointer ${
+                pathname === "/profile" ? "text-(--color-accent-hover) bg-white/40" : ""
               }`}
               title="Profil"
             >
-              <UserCircle className="w-5 h-5" />
+              <UserCircle className="w-4.5 h-4.5" />
             </Link>
             <button
               onClick={handleLogout}
-              className="p-2 rounded-full hover:bg-black/5 transition-colors"
+              className="p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-950/20 text-red-500 transition-all duration-300 hover:scale-110 cursor-pointer"
               title="Keluar"
             >
-              <LogOut className="w-5 h-5 text-red-500" />
+              <LogOut className="w-4.5 h-4.5" />
             </button>
           </div>
         </div>
